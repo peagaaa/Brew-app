@@ -15,17 +15,17 @@ export default function Layout(){
                 }}
             />
             <Tabs.Screen
-                name="profile"
-                options={{
-                    title: "Perfil do usuário",
-                    tabBarLabel:"Perfil",
-                }}
-            />
-            <Tabs.Screen
                 name="saves"
                 options={{
                     title: "Receitas salvas",
                     tabBarLabel:"Salvos",
+                }}
+            />
+            <Tabs.Screen
+                name="profile"
+                options={{
+                    title: "Perfil do usuário",
+                    tabBarLabel:"Perfil",
                 }}
             />
         </Tabs>

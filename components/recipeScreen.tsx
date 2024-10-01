@@ -11,7 +11,7 @@ import {
   import {Link} from 'expo-router';
   
   const RecipeScreen = () => {
-    const URL = 'https://dummyjson.com/recipes?sortBy=id&limit=1';
+    const URL = 'https://dummyjson.com/recipes';
   
     const [recipes, setReceitas] = useState([]);
     const [error, setError] = useState(true);
@@ -56,7 +56,7 @@ import {
             />
             <View style={styles.desciptionRecipies}>
               <Text>{item.name}</Text>
-              <Text>Origem: {item.cuisine}</Text>
+              <Text>Origem: {item.couisine}</Text>
               <Text>Tempo da receita: {item.prepTimeMinutes + item.cookTimeMinutes} Minutes</Text>
               <Text>Nota: {item.rating}</Text>
             </View>

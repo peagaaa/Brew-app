@@ -34,7 +34,7 @@ export default function Index() {
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleSwitch}
             value={isEnabled}
-          />
+          />  
         </View>
           <RecipeScreen />  
       </ScrollView>
