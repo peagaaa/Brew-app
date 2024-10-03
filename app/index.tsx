@@ -11,14 +11,14 @@ import {
   TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import RecipeScreen from '../../components/recipeScreen';
+import RecipeScreen from '../components/recipeScreen';
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import {Link} from 'expo-router';
 
 export default function Index() {
 
   const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => {
+  const toggleSwitch = () => {  
     setIsEnabled(previousState => !previousState);
     setDarkMode(prevColor => (prevColor === 'black' ? 'blue' : 'black'));
   }

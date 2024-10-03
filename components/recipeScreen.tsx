@@ -47,7 +47,8 @@ import {
               alignItems: 'center',
             }}>
             <Link
-              href={"./recipes"}
+              //?id=${id}&nome=${nome}
+              href={`./recipes/?idRecipe=${item.id}`}
               style={styles.desciptionRecipies}
             >                      
             <Image
@@ -56,7 +57,7 @@ import {
             />
             <View style={styles.desciptionRecipies}>
               <Text>{item.name}</Text>
-              <Text>Origem: {item.couisine}</Text>
+              <Text>Origem: {item.cuisine}</Text>
               <Text>Tempo da receita: {item.prepTimeMinutes + item.cookTimeMinutes} Minutes</Text>
               <Text>Nota: {item.rating}</Text>
             </View>
