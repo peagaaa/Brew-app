@@ -49,6 +49,7 @@ import {
             <Link
               //?id=${id}&nome=${nome}
               href={`./recipes/?idRecipe=${item.id}`}
+              // href={`./recipes/`}
               style={styles.desciptionRecipies}
             >                      
             <Image
