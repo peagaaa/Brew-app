@@ -52,10 +52,10 @@ import {
               // href={`./recipes/`}
               style={styles.desciptionRecipies}
             >                      
-            <Image
-              source={{ uri: item.image }}
-              style={{ width: '100%', height: 200}}
-            />
+              <Image
+                source={{ uri: item.image }}
+                style={{ width: '100%', height: 200}}
+              />
             <View style={styles.desciptionRecipies}>
               <Text>{item.name}</Text>
               <Text>Origem: {item.cuisine}</Text>

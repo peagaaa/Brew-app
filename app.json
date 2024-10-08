@@ -31,6 +31,10 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {},
+    "fonts": {
+    "BebasNeue": "./assets/fonts/BebasNeue-Regular.ttf"
     }
   }
 }

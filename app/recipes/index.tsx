@@ -9,7 +9,9 @@ export default function index() {
   const { idRecipe } = useLocalSearchParams();
   
   return (
-    <View>
+    <View 
+      style={{flex:1}}
+    >
       <TelaDaReceita/>
     </View>
   )

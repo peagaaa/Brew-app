@@ -2,6 +2,8 @@ import { getApi } from '@/services/api'
 import { View, Text, FlatList, StyleSheet, Image, ActivityIndicator } from "react-native";
 import React, { useState, useEffect } from 'react';
 import {useLocalSearchParams} from 'expo-router'
+import PageError from './pageError';
+
 
 
 export default function TelaDaReceita(){
@@ -21,15 +23,19 @@ export default function TelaDaReceita(){
     }, []);
 
     return(
-        <View>
+        <View
+            style={{flex:1}}
+        >
             {
                 !recipe ? 
                 (
-                    <ActivityIndicator/>
+                    <PageError/>
                 ): 
                 (
                     <>
-                        <Text>{recipe.name}</Text>
+                        <Text
+                            style={styles.recipeName}
+                        >{recipe.name}</Text>
                         <Image
                             style={styles.imageRecipe}
                             source={{uri: recipe.image}}
@@ -55,7 +61,7 @@ export default function TelaDaReceita(){
                         />
                     </>
                 )
-            }
+            }                                                                                                                                                                                                                                                                                                                                         
         </View>
     );
 }
@@ -67,4 +73,8 @@ const styles = StyleSheet.create({
         height: 200,
         width: 200,
     },
+    recipeName:{
+        fontFamily:'BebasNeue',
+        fontSize: 100
+    }
   });
