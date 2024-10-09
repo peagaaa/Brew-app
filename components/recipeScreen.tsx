@@ -75,7 +75,7 @@ import {
     },
     desciptionRecipies:{
       flex: 1,
-      width: '100%',
+      width: '75%',
       alignItems:'flex-start',
       backgroundColor: '#fca89d', 
       borderBottomRightRadius: 12,
