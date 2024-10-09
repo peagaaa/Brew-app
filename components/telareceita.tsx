@@ -32,7 +32,9 @@ export default function TelaDaReceita(){
                     <PageError/>
                 ): 
                 (
-                    <>
+                    <View
+                        style={styles.body}
+                    >
                         <Text
                             style={styles.recipeName}
                         >{recipe.name}</Text>
@@ -59,7 +61,7 @@ export default function TelaDaReceita(){
                                 <Text>{item}</Text>
                             )}
                         />
-                    </>
+                    </View>
                 )
             }                                                                                                                                                                                                                                                                                                                                         
         </View>
@@ -67,14 +69,22 @@ export default function TelaDaReceita(){
 }
 
 const styles = StyleSheet.create({
-    imageRecipe: {
-        flex: 1,
-        alignItems: 'center',
-        height: 200,
-        width: 200,
+    body:{
+        
     },
     recipeName:{
         fontFamily:'BebasNeue',
-        fontSize: 100
-    }
+        fontSize: 40
+    },
+    imageRecipe: {
+        flex: 1,
+        alignItems: 'center',
+        height: 400,
+        width: '90%',
+        marginTop:20,
+        borderRadius: 15,
+        padding:50,
+        
+    },
+
   });
