@@ -10,6 +10,7 @@ import {
 import React, { useState } from "react";
 import RecipeScreen from "../components/recipeScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { Link } from "expo-router";
 
 export default function Index() {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -22,6 +23,7 @@ export default function Index() {
   return (
     <SafeAreaView style={styles.body}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Text >Brew</Text>
         <View style={styles.container}>
           <View style={styles.inputContainer}>
             <Icon name="search" size={20} color="#888" style={styles.icon} />
@@ -31,15 +33,23 @@ export default function Index() {
         <RecipeScreen />
       </ScrollView>
       <View style={styles.ItemFixed}>
-          <Button
+        <Link href={'/'}>
+        <Button
             title="Início"
           />
-          <Button
+        </Link>
+        <Link href={'/videos'}>
+        <Button
             title="Vídeos"
           />
-          <Button
+        </Link>
+
+          <Link href={'/saves'}>
+                    <Button
             title="Salvos"
           />
+          </Link>
+
       </View>
     </SafeAreaView>
   );
@@ -83,7 +93,8 @@ const styles = StyleSheet.create({
     bottom: 20, // Ajuste a posição conforme necessário
     left: 20,
     right: 20,
-    backgroundColor: '#6200ee',
+    backgroundColor: '#ffe1c9',
+    opacity: 0.8,
     padding: 15,
     borderRadius: 5,
     alignItems: 'center', // Centraliza o conteúdo do item fixo
