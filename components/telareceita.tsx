@@ -11,13 +11,10 @@ import React, { useState, useEffect } from "react";
 import { useLocalSearchParams } from "expo-router";
 import PageError from "./pageError";
 import { useFonts } from "expo-font";
+import useCustomFonts from "@/hooks/useFonts";
 
 export default function TelaDaReceita() {
   const { idRecipe, nameRecipe } = useLocalSearchParams();
-
-  const [loaded, error] = useFonts({
-    "Bebas-Neue-Regular": require("../assets/fonts/BebasNeue-Regular.ttf"),
-  });
 
   const [recipe, setRecipe] = useState(null);
   const URL = `https://dummyjson.com/recipes/${idRecipe}`;
@@ -31,9 +28,7 @@ export default function TelaDaReceita() {
     burcarDados(); // Chama a função ao montar o componente
   }, []);
 
-  if (!loaded && !error) {
-    return null;
-  }
+  const fontsLoaded = useCustomFonts();
 
   return (
     <View style={{ flex: 1 }}>
