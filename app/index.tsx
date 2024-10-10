@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import RecipeScreen from "../components/recipeScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Link } from "expo-router";
+import SeachBar from '@/components/seachBar'
 
 export default function Index() {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -23,13 +24,7 @@ export default function Index() {
   return (
     <SafeAreaView style={styles.body}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Text >Brew</Text>
-        <View style={styles.container}>
-          <View style={styles.inputContainer}>
-            <Icon name="search" size={20} color="#888" style={styles.icon} />
-            <TextInput style={styles.input} placeholder="Buscar..." />
-          </View>
-        </View>
+      <SeachBar/>
         <RecipeScreen />
       </ScrollView>
       <View style={styles.ItemFixed}>
