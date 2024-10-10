@@ -9,7 +9,8 @@ import {
   } from 'react-native';
   import React, { useEffect, useState } from 'react';
   import {Link} from 'expo-router';
-  
+  import Icon from "react-native-vector-icons/AntDesign";
+
   const RecipeScreen = () => {
     const URL = 'https://dummyjson.com/recipes';
   
@@ -56,6 +57,8 @@ import {
                 source={{ uri: item.image }}
                 style={{ width: '100%', height: 200}}
               />
+              <Icon name="hearto" size={30} color="red" style={styles.icon} />
+
             <View style={styles.desciptionRecipies}>
               <Text>{item.name}</Text>
               <Text>Origem: {item.cuisine}</Text>
@@ -80,6 +83,12 @@ import {
       backgroundColor: '#fca89d', 
       borderBottomRightRadius: 12,
       borderBottomLeftRadius: 12
+    },
+    icon:{
+      position: 'absolute',
+      right:25,
+      top: 15,
+
     }
   });
   
