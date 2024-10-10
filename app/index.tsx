@@ -12,6 +12,7 @@ import RecipeScreen from "../components/recipeScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Link } from "expo-router";
 import SeachBar from '@/components/seachBar'
+import TabBarNavigation from "@/components/navigation/tabBarNavigation";
 
 export default function Index() {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -27,25 +28,7 @@ export default function Index() {
       <SeachBar/>
         <RecipeScreen />
       </ScrollView>
-      <View style={styles.ItemFixed}>
-        <Link href={'/'}>
-        <Button
-            title="Início"
-          />
-        </Link>
-        <Link href={'/videos'}>
-        <Button
-            title="Vídeos"
-          />
-        </Link>
-
-          <Link href={'/saves'}>
-                    <Button
-            title="Salvos"
-          />
-          </Link>
-
-      </View>
+      <TabBarNavigation/>
     </SafeAreaView>
   );
 }
