@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, SafeAreaView } from 'react-native'
 import React from 'react'
 import { useLocalSearchParams  } from 'expo-router';
 import RenderedRecipe from '@/components/renderedRecipe';
@@ -9,10 +9,20 @@ export default function index() {
   const { idRecipe } = useLocalSearchParams();
   
   return (
-    <View 
-      style={{flex:1}}
-    >
+    <SafeAreaView style={styles.containerWrapper}>
       <TelaDaReceita/>
-    </View>
+    </SafeAreaView>
   )
 } 
+
+const styles = StyleSheet.create({
+  containerWrapper:{
+    flex: 1,
+  }
+});
+
+/*
+
+{algumaCoisa ? (codigo se for verdadeiro) : (se for falso)}
+
+*/

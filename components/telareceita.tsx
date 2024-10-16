@@ -6,21 +6,20 @@ import {
   StyleSheet,
   Image,
   ActivityIndicator,
-<<<<<<< HEAD
   ScrollView 
-=======
->>>>>>> 353071c6bf3cd0421878d765040beb56e3ac33a9
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useLocalSearchParams } from "expo-router";
 import PageError from "./pageError";
 import { useFonts } from "expo-font";
+import Icon from '@/components/icon'
 import useCustomFonts from "@/hooks/useFonts";
 
 export default function TelaDaReceita() {
-  const { idRecipe, nameRecipe } = useLocalSearchParams();
+  const { idRecipe } = useLocalSearchParams();
 
   const [recipe, setRecipe] = useState(null);
+
   const URL = `https://dummyjson.com/recipes/${idRecipe}`;
 
   const burcarDados = async () => {
@@ -35,47 +34,73 @@ export default function TelaDaReceita() {
   const fontsLoaded = useCustomFonts();
 
   return (
-<<<<<<< HEAD
-    <ScrollView  style={{ flex: 1 }}>
-=======
-    <View style={{ flex: 1 }}>
->>>>>>> 353071c6bf3cd0421878d765040beb56e3ac33a9
+    <View  style={{flex:1}}>
       {!recipe ? (
         <PageError />
       ) : (
-        <View style={styles.body}>
+        <ScrollView style={styles.body}>
+
+          <Text style={styles.recipeOrigin}>{recipe.cuisine}</Text>
           <Text style={styles.recipeName}>{recipe.name}</Text>
-          <Image style={styles.imageRecipe} source={{ uri: recipe.image }} />
-          <View>
-            <Text>Informações: </Text>
+
+          <View style={styles.containerWrapperImage}>
+            <Image style={styles.imageRecipe} source={{ uri: recipe.image }} />
+            <Icon
+              style={styles.iconHeart}
+            />
           </View>
-          <Text>Ingredientes: </Text>
+
+          <View>
+            <Text style={styles.titleTeme}>Informações: </Text>
+          </View>
+
+          <Text style={styles.titleTeme}>Ingredientes: </Text>
           <FlatList
             data={recipe.ingredients}
             keyExtractor={(ingredient, index) => index.toString()}
-            renderItem={({ item }) => <Text>{item}</Text>}
+            renderItem={({ item, index }) => 
+              <View style={styles.itemContainerIngredients}>
+                <Text style={styles.itemTextModoDePreparo}>{index + 1} . {item}</Text>
+              </View>
+              }
           />
-          <Text>Modo de preparo: </Text>
+
+          <Text style={styles.titleTeme}>Modo de preparo: </Text>
           <FlatList
             data={recipe.instructions}
             keyExtractor={(instruction, index) => index.toString()}
-            renderItem={({ item }) => <Text>{item}</Text>}
+            renderItem={({ item, index }) => 
+              <View style={styles.itemContainerModoDePreparo}>
+                <Text style={styles.itemTextModoDePreparo}>{index + 1} . {item}</Text>
+              </View>
+            }
           />
-        </View>
+
+        </ScrollView>
       )}
-<<<<<<< HEAD
-    </ScrollView >
-=======
-    </View>
->>>>>>> 353071c6bf3cd0421878d765040beb56e3ac33a9
+    </View >
   );
 }
 
+/*Parte de estilização do layout*/
+
 const styles = StyleSheet.create({
-  body: {},
+  body: {
+    flex:1,
+    marginLeft: 15,
+    paddingTop: 20,
+    paddingBottom: 20
+  },
+  recipeOrigin:{
+    fontSize: 25,
+    fontFamily: "Mont-Serrat"
+  },
   recipeName: {
     fontFamily: "Bebas-Neue-Regular",
     fontSize: 40,
+  },
+  containerWrapperImage:{
+    alignItems: 'center',
   },
   imageRecipe: {
     flex: 1,
@@ -83,7 +108,41 @@ const styles = StyleSheet.create({
     height: 400,
     width: "90%",
     marginTop: 20,
-    borderRadius: 15,
+    borderRadius: 5,
     padding: 50,
+    position: 'relative'
+
   },
+  titleTeme:{
+    fontFamily: 'Bebas-Neue-Regular',
+    fontSize: 25,
+    marginTop: 15
+  },
+  itemContainerIngredients:{
+    flexDirection: 'row',
+    alignItems: 'center', 
+    marginRight: 20,
+    paddingTop: 5
+  },
+  itemTextIngredients:{
+    fontSize: 16,
+    fontFamily: 'Mont-Serrat',
+    color: 'black'
+  },
+  itemContainerModoDePreparo:{
+    flexDirection: 'row',
+    alignItems: 'center', 
+    marginRight: 20,
+    paddingTop: 5
+  },
+  itemTextModoDePreparo:{
+    fontSize: 16,
+    fontFamily: 'Mont-Serrat',
+    color: 'black'
+  },
+  iconHeart:{
+    position: 'absolute',
+    top: 40,
+    right: 40
+  }
 });

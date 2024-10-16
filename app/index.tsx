@@ -9,15 +9,9 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import RecipeScreen from "../components/recipeScreen";
-import Icon from "react-native-vector-icons/FontAwesome";
 import { Link } from "expo-router";
-<<<<<<< HEAD
-import SeachBar from "@/components/searchBar";
 import TabBarNavigation from "@/components/navigation/components/navigation/TabBarIcon.tsx";
-=======
-import SeachBar from '@/components/seachBar'
-import TabBarNavigation from "@/components/navigation/tabBarNavigation";
->>>>>>> 353071c6bf3cd0421878d765040beb56e3ac33a9
+import SeachBar from "../components/searchBar";
 
 export default function Index() {
   const [isEnabled, setIsEnabled] = useState(false);

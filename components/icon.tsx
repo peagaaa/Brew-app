@@ -3,7 +3,7 @@ import React from "react";
 import Icon from "react-native-vector-icons/AntDesign";
 import { useState } from "react";
 
-export default function Icone() {
+export default function Icone({ style }) {
 
     const fullHeart = 'heart';
     const empytHeart = 'hearto';
@@ -20,7 +20,7 @@ export default function Icone() {
 
 
   return (
-    <TouchableOpacity style={styles.iconWrapper} onPress={changeHeartIcon}>
+    <TouchableOpacity style={[styles.iconWrapper, style]} onPress={changeHeartIcon}>
       <Icon name={changeIcon} size={40} color="red" />
     </TouchableOpacity>
   );
@@ -29,10 +29,5 @@ export default function Icone() {
 const styles = StyleSheet.create({
     iconWrapper: {
     position: "absolute",
-    zIndex: 1,
-    right: 25,
-    top: 25,
   },
 });
-
-// picker item pesquisar 
