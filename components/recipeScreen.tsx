@@ -6,12 +6,13 @@ import {
   FlatList,
   Image,
   Button,
+  TouchableOpacity
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Link } from "expo-router";
-import Icon from "react-native-vector-icons/AntDesign";
 import Icone from "./icon";
 import AntDesign from '@expo/vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const RecipeScreen = () => {
 
@@ -55,9 +56,9 @@ const RecipeScreen = () => {
           style={{
             padding: 16,
             alignItems: "center",
+            position:'relative'
           }}
         >
-          <Icone />
           <Image
             source={{ uri: item.image }}
             style={{ width: "100%", height: 200 }}
@@ -80,19 +81,24 @@ const RecipeScreen = () => {
           </Link>
         </View>
       )}
+    /> 
+    <TouchableOpacity 
+      style={styles.containerButton}
+      onPress={() => {
+        if(skipRecipe <= 50){
+          setSkipRecipe(skipRecipe + 2)
+        }else{
+          setSkipRecipe(skipRecipe * 0)
+        }
+      }}
+    >
+    <Icon
+      name='plus'
+      color='red'
+      size={50}
+      style={styles.iconPlusRecipes}
     />
-      <AntDesign 
-      style={{position:'relative', left: 123}}
-        name="pluscircle" 
-        size={24} 
-        color="black" 
-        onPress={() => {
-          if(skipRecipe > 50){
-            setSkipRecipe(0)
-          }else{
-            setSkipRecipe(skipRecipe + 2)
-          }
-        }}/>    
+    </TouchableOpacity>
 </>
   );
 };
@@ -112,6 +118,20 @@ const styles = StyleSheet.create({
     right: 25,
     top: 15,
   },
+  containerButton:{
+    backgroundColor: 'white',
+    height: 75,
+    width: 75,
+    borderRadius: 50,
+    alignItems:'center',
+    justifyContent:'center',
+    position:'absolute',
+    bottom: 100,
+    right: 25
+  },
+  iconPlusRecipes:{
+
+  }
 });
 
 export default RecipeScreen;
