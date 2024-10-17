@@ -11,9 +11,16 @@ import React, { useEffect, useState } from "react";
 import { Link } from "expo-router";
 import Icon from "react-native-vector-icons/AntDesign";
 import Icone from "./icon";
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const RecipeScreen = () => {
-  const URL = "https://dummyjson.com/recipes";
+
+  const limitRecipe = 2;
+  const [ skipRecipe, setSkipRecipe ] = useState(0)
+
+  const URL = `https://dummyjson.com/recipes?limit=${limitRecipe}&skip=${skipRecipe}`;
+
+  // ?limit=5 & skip=4
 
   const [recipes, setReceitas] = useState([]);
   const [error, setError] = useState(true);
@@ -36,9 +43,10 @@ const RecipeScreen = () => {
         }*/
     };
     getApi();
-  }, []);
+  }, [skipRecipe]);
 
   return (
+    <>
     <FlatList
       data={recipes}
       keyExtractor={(item) => item.id.toString()}
@@ -73,6 +81,19 @@ const RecipeScreen = () => {
         </View>
       )}
     />
+      <AntDesign 
+      style={{position:'relative', left: 123}}
+        name="pluscircle" 
+        size={24} 
+        color="black" 
+        onPress={() => {
+          if(skipRecipe > 50){
+            setSkipRecipe(0)
+          }else{
+            setSkipRecipe(skipRecipe + 2)
+          }
+        }}/>    
+</>
   );
 };
 

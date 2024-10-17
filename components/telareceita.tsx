@@ -42,12 +42,12 @@ export default function TelaDaReceita() {
 
           <Text style={styles.recipeOrigin}>{recipe.cuisine}</Text>
           <Text style={styles.recipeName}>{recipe.name}</Text>
+          <Icon
+              style={styles.iconHeart}
+          />
 
           <View style={styles.containerWrapperImage}>
             <Image style={styles.imageRecipe} source={{ uri: recipe.image }} />
-            <Icon
-              style={styles.iconHeart}
-            />
           </View>
 
           <View>
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
   iconHeart:{
     position: 'absolute',
-    top: 40,
+    top: 25,
     right: 40
   }
 });
