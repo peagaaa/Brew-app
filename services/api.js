@@ -1,19 +1,15 @@
-import {useLocalSearchParams} from 'expo-router'
-
-const { idRecipe } = useLocalSearchParams();
-
-// const URL = "https://dummyjson.com/recipes/";
-  //const URL = `https://dummyjson.com/recipes/${idRecipe}`;
-
-export async function getApi(URL) {
+const fecthData = async (URL) => {
     try {
-        const response = await fetch(URL);
-    if (!response.ok) {
-        throw new Error("Erro");
-    }
-    const varRecipeArm = await response.json();
-    return varRecipeArm;
+        const response = await fetch(URL)
+        if(!response.ok){
+            throw new Error('Erro na chamada da API, por algum motivo, descubra!!')
+        }
+        const respostaDaApi = await response.json()
+        return respostaDaApi
     } catch (err) {
-        console.error(err);
+       console.error('Erro ao buscar a resposta: ', err)
+       throw err
     }
-}
+};
+
+export default fecthData
