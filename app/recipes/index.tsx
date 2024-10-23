@@ -22,7 +22,5 @@ const styles = StyleSheet.create({
 });
 
 /*
-
 {algumaCoisa ? (codigo se for verdadeiro) : (se for falso)}
-
 */
