@@ -1,88 +1,96 @@
-import { getApi } from "@/services/api";
 import {
   View,
   Text,
-  FlatList,
   StyleSheet,
   Image,
   ActivityIndicator,
-  ScrollView 
+  ScrollView,
+  FlatList
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useLocalSearchParams } from "expo-router";
-import PageError from "./pageError";
-import { useFonts } from "expo-font";
-import Icon from '@/components/icon'
+import fecthData from "@/services/api";
 import useCustomFonts from "@/hooks/useFonts";
 
-export default function TelaDaReceita() {
+const TelaDaReceita = () => {
+  const fontsLoaded = useCustomFonts();
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
   const { idRecipe } = useLocalSearchParams();
-
-  const [recipe, setRecipe] = useState(null);
 
   const URL = `https://dummyjson.com/recipes/${idRecipe}`;
 
-  const burcarDados = async () => {
-    const data = await getApi(URL);
-    setRecipe(data);
-  };
-
   useEffect(() => {
-    burcarDados(); // Chama a função ao montar o componente
-  }, []);
+    const fetchApiData = async () => {
+      try {
+        const resultado = await fecthData(URL);
+        setData(resultado); // Aqui setamos diretamente o resultado
+      } catch (error) {
+        setError(error.message);
+      }
+    };
 
-  const fontsLoaded = useCustomFonts();
+    fetchApiData();
+  }, [idRecipe]);
+
+  // Caso a resposta da API apresente uma falha
+  if (error) {
+    return (
+      <View>
+        <Text>Error: {error}</Text>
+      </View>
+    );
+  }
+
+  // Componente será executado enquanto a resposta da API não carregar.
+  if (!data) {
+    return (
+      <View>
+        <Text>Carregando conteúdo...</Text>
+        <ActivityIndicator />
+      </View>
+    );
+  }
 
   return (
-    <View  style={{flex:1}}>
-      {!recipe ? (
-        <PageError />
-      ) : (
-        <ScrollView style={styles.body}>
+    <ScrollView style={styles.body}>
 
-          <Text style={styles.recipeOrigin}>{recipe.cuisine}</Text>
-          <Text style={styles.recipeName}>{recipe.name}</Text>
-          <Icon
-              style={styles.iconHeart}
-          />
+    <Text style={styles.recipeOrigin}>{data.cuisine}</Text>
+    <Text style={styles.recipeName}>{data.name}</Text>
 
-          <View style={styles.containerWrapperImage}>
-            <Image style={styles.imageRecipe} source={{ uri: recipe.image }} />
-          </View>
+    <View style={styles.containerWrapperImage}>
+      <Image style={styles.imageRecipe} source={{ uri: data.image }} />
+    </View>
 
-          <View>
-            <Text style={styles.titleTeme}>Informações: </Text>
-          </View>
+    <View>
+      <Text style={styles.titleTeme}>Informações: </Text>
+    </View>
 
-          <Text style={styles.titleTeme}>Ingredientes: </Text>
-          <FlatList
-            data={recipe.ingredients}
-            keyExtractor={(ingredient, index) => index.toString()}
-            renderItem={({ item, index }) => 
-              <View style={styles.itemContainerIngredients}>
-                <Text style={styles.itemTextModoDePreparo}>{index + 1} . {item}</Text>
-              </View>
-              }
-          />
+    <Text style={styles.titleTeme}>Ingredientes: </Text>
+    <FlatList
+      data={data.ingredients}
+      keyExtractor={(ingredient, index) => index.toString()}
+      renderItem={({ item, index }) => 
+        <View style={styles.itemContainerIngredients}>
+          <Text style={styles.itemTextModoDePreparo}>{index + 1} . {item}</Text>
+        </View>
+        }
+    />
 
-          <Text style={styles.titleTeme}>Modo de preparo: </Text>
-          <FlatList
-            data={recipe.instructions}
-            keyExtractor={(instruction, index) => index.toString()}
-            renderItem={({ item, index }) => 
-              <View style={styles.itemContainerModoDePreparo}>
-                <Text style={styles.itemTextModoDePreparo}>{index + 1} . {item}</Text>
-              </View>
-            }
-          />
+    <Text style={styles.titleTeme}>Modo de preparo: </Text>
+    <FlatList
+      data={data.instructions}
+      keyExtractor={(instruction, index) => index.toString()}
+      renderItem={({ item, index }) => 
+        <View style={styles.itemContainerModoDePreparo}>
+          <Text style={styles.itemTextModoDePreparo}>{index + 1} . {item}</Text>
+        </View>
+      }
+    />
 
-        </ScrollView>
-      )}
-    </View >
+  </ScrollView>
   );
-}
-
-/*Parte de estilização do layout*/
+};
 
 const styles = StyleSheet.create({
   body: {
@@ -146,3 +154,5 @@ const styles = StyleSheet.create({
     right: 40
   }
 });
+
+export default TelaDaReceita;
