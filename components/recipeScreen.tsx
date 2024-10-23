@@ -1,115 +1,99 @@
 import {
   View,
   Text,
+  SafeAreaView,
   StyleSheet,
-  FlatList,
   Image,
-  TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import fetchData from "@/services/api";
 import { Link } from "expo-router";
-import Icone from "./icon";
-import Icon from "react-native-vector-icons/FontAwesome";
-import useCustomFonts from "@/hooks/useFonts";
-import { fetchRecipes } from '../services/fecthrecipes'; // Importando a função
 
-const RecipeScreen = () => {
-  const fontsLoaded = useCustomFonts();
-
-  const limitRecipe = 2;
-  const [skipRecipe, setSkipRecipe] = useState(0);
-  const URL = `https://dummyjson.com/recipes?limit=${limitRecipe}&skip=${skipRecipe}`;
-  
-  const [recipes, setReceitas] = useState([]);
+const IndexRecipeScreen = () => {
+  const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(null);
+  const URL = 'https://dummyjson.com/recipes';
 
   useEffect(() => {
-    fetchRecipes(URL, setReceitas, setError);
-  }, [skipRecipe]);
+    const fetchApiData = async () => {
+      try {
+        const resultado = await fetchData(URL);
+        setData(resultado.recipes);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchApiData();
+  }, []);
+
+  if (error) {
+    return (
+      <View>
+        <Text>Error: {error}</Text>
+      </View>
+    );
+  }
+
+  if (!data) {
+    return (
+      <View>
+        <Text>Carregando conteúdo...</Text>
+        <ActivityIndicator />
+      </View>
+    );
+  }
 
   return (
-    <>
-      <FlatList
-        data={recipes}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View
-            style={{
-              padding: 16,
-              alignItems: "center",
-              position: "relative",
-            }}
-          >
+    <SafeAreaView style={styles.container}>
+      {data.map((recipe) => (
+        <View key={recipe.id} style={styles.containerWrapper}>
+          <Text style={styles.cuisineText}>{recipe.cuisine}</Text>
+          <Link href={`./recipes/?idRecipe=${recipe.id}`}>
             <Image
-              source={{ uri: item.image }}
-              style={{ width: "100%", height: 200 }}
+              source={{ uri: recipe.image }}
+              style={styles.imageStyle}
+              accessibilityLabel={`Image of ${recipe.name}`} // Acessibilidade
             />
-            <Icone style={styles.iconHeart} />
-            <Link
-              href={`./recipes/?idRecipe=${item.id}`}
-              style={styles.desciptionRecipies}
-            >
-              <View style={styles.desciptionRecipies}>
-                <Text style={styles.textRecipeDescription}>{item.name}</Text>
-                <Text style={styles.textRecipeDescription}>
-                  Origem: {item.cuisine}
-                </Text>
-                <Text style={styles.textRecipeDescription}>
-                  Tempo da receita: {item.prepTimeMinutes + item.cookTimeMinutes} Minutes
-                </Text>
-                <Text style={styles.textRecipeDescription}>
-                  Nota: {item.rating}
-                </Text>
-              </View>
-            </Link>
-          </View>
-        )}
-      />
-      <TouchableOpacity
-        style={styles.containerButton}
-        onPress={() => {
-          if (skipRecipe <= 50) {
-            setSkipRecipe(skipRecipe + 2);
-          } else {
-            setSkipRecipe(0);
-          }
-        }}
-      >
-        <Icon name="plus" color="red" size={50} />
-      </TouchableOpacity>
-    </>
+          </Link>
+          <Text style={styles.recipeName}>{recipe.name}</Text>
+          <Text>
+            Tempo de preparo: {recipe.prepTimeMinutes || 0 + recipe.cookTimeMinutes || 0} minutos
+          </Text>
+        </View>
+      ))}
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  desciptionRecipies: {
-    flex: 1,
-    width: "99%",
-    alignItems: "flex-start",
-    backgroundColor: "#fca89d",
-    borderBottomRightRadius: 12,
-    borderBottomLeftRadius: 12,
+  container: {
+    alignItems: 'center',
+    padding: 16,
   },
-  iconHeart: {
-    position: "absolute",
-    right: 30,
-    top: 30,
+  containerWrapper: {
+    marginTop: 16,
+    backgroundColor: '#C2C0A6',
+    height: 200,
+    width: "90%", // Ajustado para uma largura maior
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10, // Opcional: para bordas arredondadas
   },
-  containerButton: {
-    backgroundColor: "white",
-    height: 75,
-    width: 75,
-    borderRadius: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
-    bottom: 100,
-    right: 25,
+  imageStyle: {
+    height: 100, // Aumentado para melhorar a visualização
+    width: 100,
+    borderRadius: 8, // Opcional: para bordas arredondadas
   },
-  textRecipeDescription: {
-    fontFamily: "Mont-Serrat",
+  cuisineText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  recipeName: {
+    fontSize: 18,
+    fontWeight: '600',
   },
 });
 
-export default RecipeScreen;
+export default IndexRecipeScreen;
