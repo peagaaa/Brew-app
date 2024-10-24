@@ -21,7 +21,7 @@ export default function Icone({ style }) {
 
   return (
     <TouchableOpacity style={[styles.iconWrapper, style]} onPress={changeHeartIcon}>
-      <Icon name={changeIcon} size={40} color="red" />
+      <Icon name={changeIcon} size={30} color="red" />
     </TouchableOpacity>
   );
 }

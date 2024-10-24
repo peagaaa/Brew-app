@@ -16,7 +16,7 @@ export default function SeachBar() {
 
 const styles = StyleSheet.create({
   body: {
-    backgroundColor: "#fac7b4",
+    backgroundColor: "#FFFF",
     flex: 1, // Adicione flex: 1 para o SafeAreaView
   },
   scrollContainer: {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     width: "80%",
-    backgroundColor: "#ffe1c9",
+    backgroundColor: "#FFF",
   },
   input: {
     flex: 1,

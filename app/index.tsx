@@ -8,7 +8,7 @@ import {
   Button,
 } from "react-native";
 import React, { useState } from "react";
-import RecipeScreen from "../components/recipeScreen";
+import RecipeScreen from "../components/IndexRecipeScreen";
 import { Link } from "expo-router";
 import TabBarNavigation from "@/components/navigation/components/navigation/TabBarIcon.tsx";
 import SeachBar from "../components/searchBar";
@@ -34,7 +34,7 @@ export default function Index() {
 
 const styles = StyleSheet.create({
   body: {
-    backgroundColor: "#fac7b4",
+    backgroundColor: "#FFF",
     flex: 1, // Adicione flex: 1 para o SafeAreaView
   },
   scrollContainer: {
