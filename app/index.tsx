@@ -12,6 +12,8 @@ import RecipeScreen from "../components/IndexRecipeScreen";
 import { Link } from "expo-router";
 import TabBarNavigation from "@/components/navigation/components/navigation/TabBarIcon.tsx";
 import SeachBar from "../components/searchBar";
+import RecipeProvider from '../contexts/savesRecipes'
+import Saves from "./saves";
 
 export default function Index() {
   const [isEnabled, setIsEnabled] = useState(false);
