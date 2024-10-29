@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
   body: {
     backgroundColor: "#FFF",
     flex: 1, // Adicione flex: 1 para o SafeAreaView
+    position:'relative'
   },
   scrollContainer: {
     paddingBottom: 100, // Adicione padding para evitar que o conteúdo fique atrás do item fixo
