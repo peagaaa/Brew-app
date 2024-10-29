@@ -1,27 +1,64 @@
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, Button, Image, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-
+import { useEffect, useState } from 'react';
 import React from "react";
+import fetchData from "@/services/api";
+import {Link} from 'expo-router'
 
-export default function SeachBar() {
+export default function SearchBar() {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const [idRecipeDigitado, setIdRecipeDigitado] = useState(''); // Corrigido o nome da função de set
+
+  const fetchApiData = async () => {
+    const URL = `https://dummyjson.com/recipes/${idRecipeDigitado}`;
+
+    try {
+      const resultado = await fetchData(URL);
+      setData(resultado); // Ajustado para pegar o resultado diretamente
+      setError(null); // Reseta o erro ao buscar uma nova receita
+    } catch (error) {
+      setError(error.message);
+      setData(null); // Reseta os dados ao encontrar um erro
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Buscar receita"
+          onChangeText={setIdRecipeDigitado}
+          keyboardType="numeric"
+        />
+        <TouchableOpacity
+          onPress={fetchApiData}
+        >
         <Icon name="search" size={20} color="#888" style={styles.icon} />
-        <TextInput style={styles.input} placeholder="Buscar..." />
+        </TouchableOpacity>
       </View>
+      <View>
+      {data && idRecipeDigitado !== '' && (
+      <View style={styles.back}>
+        <Link
+          href={`./recipes/?idRecipe=${data.id}`}
+        >
+        <Image
+          style={styles.searchImage}
+          source={{ uri: data.image }}
+        />
+        <Text>{data.name}</Text>
+        </Link>
+      </View>
+      )}
+      {error && <Text style={styles.error}>Receita não encontrada.</Text>}
+    </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  body: {
-    backgroundColor: "#FFFF",
-    flex: 1, // Adicione flex: 1 para o SafeAreaView
-  },
-  scrollContainer: {
-    paddingBottom: 100, // Adicione padding para evitar que o conteúdo fique atrás do item fixo
-  },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -47,20 +84,20 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 10,
   },
-  ItemFixed: {
-    position: "absolute",
-    bottom: 20, // Ajuste a posição conforme necessário
-    left: 20,
-    right: 20,
-    backgroundColor: "#ffe1c9",
-    opacity: 0.8,
-    padding: 15,
+  error: {
+    color: 'red',
+    marginTop: 10,
+  },
+  searchImage:{
+    width: 50,
+    height: 50
+  },
+  back:{
+    justifyContent:'center',
+    alignItems: 'center',
+    height:120,
+    width:120,
+    backgroundColor: 'grey',
     borderRadius: 5,
-    alignItems: "center", // Centraliza o conteúdo do item fixo
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-  fixedText: {
-    color: "#fff", // Cor do texto para contraste
-  },
+  }
 });
