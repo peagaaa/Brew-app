@@ -1,32 +1,49 @@
-import { Link, Stack } from 'expo-router';
-import { StyleSheet } from 'react-native';
+import { View, Text, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+export default function UserComponent() {
+  const [user, setUser] = useState(null); // Inicialize como null
 
-export default function NotFoundScreen() {
+  const value = {
+    userId: 22,
+    name: 'Pedro',
+  };
+
+  const localStorage = async () => {
+    try {
+      await AsyncStorage.setItem('User', JSON.stringify(value));
+      console.log('User saved');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getUser = async () => {
+    try {
+      const savedUser = await AsyncStorage.getItem('User');
+      if (savedUser) {
+        setUser(JSON.parse(savedUser)); // Converte para objeto
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    // Chame localStorage para armazenar o usuário quando o componente montar
+    localStorage();
+    // Chame getUser para recuperar o usuário
+    getUser();
+  }, []);
+
   return (
-    <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
-      <ThemedView style={styles.container}>
-        <ThemedText type="title">This screen doesn't exist.</ThemedText>
-        <Link href="/" style={styles.link}>
-          <ThemedText type="link">Go to home screen!</ThemedText>
-        </Link>
-      </ThemedView>
-    </>
+    <View>
+      {user ? ( // Verifica se user existe
+        <Text>{user.userId}</Text>
+      ) : (
+        <Text>Loading...</Text> // Exibe loading enquanto recupera
+      )}
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  link: {
-    marginTop: 15,
-    paddingVertical: 15,
-  },
-});
