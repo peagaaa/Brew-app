@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import fetchData from "@/services/api";
 import { Link } from "expo-router";
-import Icone from "./icon";
+import FavoriteIcon from "./FavoriteIcon";
 import Icon from "react-native-vector-icons/FontAwesome";
 import useCustomFonts from "@/hooks/useFonts";
 
@@ -74,8 +74,9 @@ const IndexRecipeScreen = () => {
               accessibilityLabel={`Image of ${recipe.name}`} // Acessibilidade
             />
           </Link>
-          <Icone
+          <FavoriteIcon
             style={styles.iconHeart}
+            idTest={`${recipe.id}`}
           />
           <Text style={styles.recipeName}>{recipe.name}</Text>
           <Text
